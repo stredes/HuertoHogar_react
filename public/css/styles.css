@@ -1,0 +1,16 @@
+:root{
+  --hh-green: #207F4C;
+}
+
+body {
+  font-family: "Montserrat", system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+.display-4, h1, h2, .hh-playfair {
+  font-family: "Playfair Display", serif;
+}
+
+.navbar-brand { font-weight: 700; }
+header.bg-success { background-color: var(--hh-green) !important; }
+.card img { object-fit: cover; height: 220px; }
+.badge-code { font-size: .75rem; letter-spacing: .5px; }
