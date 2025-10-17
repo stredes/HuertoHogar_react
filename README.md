@@ -1,70 +1,167 @@
-# Getting Started with Create React App
+# HuertoHogar 🍏 — Frescura del campo a tu mesa
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Aplicación React creada con [Create React App](https://github.com/facebook/create-react-app), estilada con **Bootstrap 5** / **React-Bootstrap**, y organizada en componentes y páginas **en español**. Incluye contexto de **Carrito**, ruteo con **React Router v6**, y utilidades para catálogo en **CLP**.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 🚀 Requisitos
 
-### `npm start`
+- Node.js 18+ y npm.
+- (Opcional) VS Code.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+> **Windows / PowerShell**: si `npm`/`npx` dan error de scripts, ejecuta PowerShell como **Administrador**:
+>
+> ```powershell
+> Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+> ```
+> (o temporal en la sesión)
+> ```powershell
+> Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+> ```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## 📦 Instalación
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+npm install
+npm i react-bootstrap bootstrap react-router-dom
+```
 
-### `npm run build`
+Bootstrap ya se carga por **CDN** en `public/index.html`.  
+Si prefieres CSS por npm, elimina el `<link>` en `public/index.html` y agrega en `src/index.js`:
+```js
+import "bootstrap/dist/css/bootstrap.min.css";
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## ▶️ Scripts disponibles
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+En el directorio del proyecto:
 
-### `npm run eject`
+- `npm start` — Modo desarrollo (http://localhost:3000).
+- `npm test` — Ejecuta pruebas en modo watch.
+- `npm run build` — Compila para producción en `build/`.
+- `npm run eject` — **Irreversible**: expone configuración (webpack, Babel, ESLint, etc).
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Documentación CRA:
+- Tests: https://facebook.github.io/create-react-app/docs/running-tests  
+- Build y Deploy: https://facebook.github.io/create-react-app/docs/deployment
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+---
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## 🧱 Estructura (src/)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```
+src/
+├─ componentes/
+│  ├─ BarraNavegacion.js
+│  ├─ Encabezado.js
+│  ├─ TarjetaProducto.js
+│  ├─ GrillaDestacados.js
+│  ├─ PieDePagina.js
+│  └─ index.js
+│
+├─ paginas/
+│  ├─ Inicio.js
+│  ├─ Productos.js
+│  ├─ DetalleProducto.js
+│  ├─ Nosotros.js
+│  ├─ Blog.js
+│  ├─ DetalleEntrada.js
+│  ├─ Contacto.js
+│  ├─ IniciarSesion.js
+│  ├─ Registro.js
+│  ├─ Carrito.js
+│  ├─ Pago.js
+│  ├─ ConfirmacionPedido.js
+│  ├─ PoliticaPrivacidad.js
+│  ├─ TerminosCondiciones.js
+│  ├─ Accesibilidad.js
+│  └─ NoEncontrado.js
+│
+├─ datos/
+│  └─ productos.js           # catálogo de ejemplo + formatoCLP
+│
+├─ contextos/
+│  └─ CarritoContexto.js     # estado global del carrito
+│
+├─ rutas/
+│  └─ Rutas.js               # React Router v6 + Layout
+│
+├─ App.js                    # alias de Inicio
+└─ index.js                  # entrada y montaje de Rutas
+```
 
-## Learn More
+---
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 🧭 Rutas principales
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- `/` Inicio (Encabezado + Destacados)
+- `/productos` Catálogo con filtros
+- `/productos/:id` Detalle de producto
+- `/nosotros`, `/blog`, `/blog/:slug`, `/contacto`
+- `/iniciar-sesion`, `/registro`
+- `/carrito` → `/pago` → `/confirmacion/:pedidoId`
+- `/privacidad`, `/terminos`, `/accesibilidad`
+- `*` 404
 
-### Code Splitting
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## 🛒 Carrito (Context API)
 
-### Analyzing the Bundle Size
+`contextos/CarritoContexto.js` expone:
+- `items`, `total`, `cantidadTotal`
+- `añadirAlCarrito(producto, cantidad)`
+- `quitarDelCarrito(codigo)`
+- `limpiarCarrito()`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+El layout envuelve la app con `<CarritoProveedor>` en `rutas/Rutas.js`.
 
-### Making a Progressive Web App
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## 🧪 Pruebas (sugeridas)
 
-### Advanced Configuration
+Ejemplos con React Testing Library:
+- `TarjetaProducto` — render de nombre, código, precio CLP, stock, botones.
+- `Productos` — filtros (búsqueda, precio, stock).
+- `Carrito` — totales, añadir/quitar.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Ejecutar:
+```bash
+npm test
+```
 
-### Deployment
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## 🌱 Datos y moneda
 
-### `npm run build` fails to minify
+- Catálogo de ejemplo en `datos/productos.js` (`productosDestacados`).
+- Utilidad `formatoCLP(number)` usa `Intl.NumberFormat("es-CL")`.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Para producción, reemplaza por llamadas `fetch` a tu API.
+
+---
+
+## 🧩 Estilos
+
+- Tipografías Montserrat/Playfair y Bootstrap 5 (CDN en `public/index.html`).
+- Puedes añadir `public/css/styles.css` y enlazarlo con `%PUBLIC_URL%/css/styles.css`.
+
+---
+
+## 🗺️ Roadmap (sugerido)
+
+- Conectar API real (productos, auth, órdenes).
+- Paginación/ordenamiento en catálogo.
+- Persistir carrito en `localStorage`.
+- Rutas protegidas (checkout).
+- SEO (`react-helmet-async`).
+- Accesibilidad (roles ARIA, focus management).
+
+---
+
+## 📄 Licencia
+
+Uso interno/educativo. Adáptala según tus necesidades.
